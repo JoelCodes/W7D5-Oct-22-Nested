@@ -15,8 +15,41 @@
   <%= @article.published %>
 </p>
 
+<h2>Comments</h2>
+<%= form_for([@article, Comment.new(article: @article)]) do |f|%>
+  <p>
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email %>
+  </p>
+  <p>
+    <%= f.label :body, "Body" %>
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit "Create New Comment"%>
+  </p>
+<% end %>
 
-<%= link_to 'Comments', article_comments_path(@article) %> |
-<%= link_to 'Comments', [@article, :comments] %> |
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Body</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @article.comments.each do |comment| %>
+      <tr>
+        <td><%= comment.email %></td>
+        <td><%= comment.body %></td>
+        <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
+        <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>
