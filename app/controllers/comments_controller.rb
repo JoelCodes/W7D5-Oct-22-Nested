@@ -1,21 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_article, only: [:index, :new, :create]
-  # GET /articles/:article_id/comments
-  # GET /articles/:article_id/comments.json
-  def index
-    @comments = @article.comments
-  end
-
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-  end
-
-  # GET /articles/:article_id/comments/new
-  def new
-    @comment = @article.comments.new
-  end
+  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :set_article, only: [:create]
 
   # GET /comments/1/edit
   def edit
@@ -42,8 +27,8 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
+        format.html { redirect_to @comment.article, notice: 'Comment was successfully updated.' }
+        format.json { render :show, status: :ok, location: @comment.article }
       else
         format.html { render :edit }
         format.json { render json: @comment.errors, status: :unprocessable_entity }

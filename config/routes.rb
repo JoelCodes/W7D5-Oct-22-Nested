@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # end
   # resources :comments, only: [:show, :update, :edit, :destroy]
   resources :articles do
-    resources :comments, shallow: true
+    resources :comments, shallow: true, except: [:index, :new, :show]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
